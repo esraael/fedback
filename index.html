@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>شاركينا رأيك</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-purple-200 to-pink-100 min-h-screen flex items-center justify-center">
+
+  <!-- نموذج الفيدباك -->
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md text-right" id="formContainer">
+    <h1 class="text-2xl font-bold text-purple-600 mb-4 text-center">💬 شاركينا رأيك</h1>
+
+    <form id="feedbackForm" class="space-y-4">
+      <!-- إلغاء كابتشا -->
+      <input type="hidden" name="_captcha" value="false">
+
+      <!-- اسم المستخدم -->
+      <input name="name" type="text" placeholder="اسمك (اختياري)" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-400"/>
+
+      <!-- رسالة الفيدباك -->
+      <textarea name="message" placeholder="اكتب رأيك هنا..." required class="w-full px-4 py-2 border border-gray-300 rounded h-32 resize-none focus:outline-none focus:ring-2 focus:ring-purple-400"></textarea>
+
+      <!-- زر الإرسال -->
+      <button type="submit" class="w-full bg-purple-500 text-white py-2 rounded hover:bg-purple-600 transition duration-300">إرسال</button>
+    </form>
+  </div>
+
+  <!-- رسالة الشكر -->
+  <div id="thankYouMessage" class="hidden text-center bg-white p-10 rounded-3xl shadow-2xl max-w-xl scale-105">
+    <h2 class="text-3xl font-bold text-green-600 mb-4">💖 شكراً لرأيك!</h2>
+    <p class="text-lg text-gray-700">تم إرسال رسالتك بنجاح.</p>
+  </div>
+
+  <!-- الجافاسكريبت -->
+  <script>
+    const form = document.getElementById("feedbackForm");
+    const formContainer = document.getElementById("formContainer");
+    const thankYouMessage = document.getElementById("thankYouMessage");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      fetch("https://formsubmit.co/esraaelsayed2442002@gmail.com", {
+        method: "POST",
+        body: formData
+      })
+      .then(response => {
+        if (response.ok) {
+          form.reset();
+          formContainer.classList.add("hidden");
+          thankYouMessage.classList.remove("hidden");
+        } else {
+          alert("حصلت مشكلة أثناء الإرسال، حاولي مرة تانية 🙁");
+        }
+      })
+      .catch(() => {
+        alert("حصلت مشكلة في الاتصال بالإنترنت");
+      });
+    });
+  </script>
+
+</body>
+</html>
